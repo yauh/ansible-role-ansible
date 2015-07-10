@@ -1,2 +1,11 @@
 ---
 # tasks file for yauh.ansible
+- name: Add Ansible ppa repo
+  apt_repository: repo='ppa:ansible/ansible' state=present
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Install software
+  apt: pkg={{ item }} state=latest update_cache=yes cache_valid_time=3600
+  with_items:
+    - software-properties-common
+    - ansible
